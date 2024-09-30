@@ -1,7 +1,4 @@
-# GCE Backend Template
-
-GCE Backend cohort template to used in every project except
-in wierd cases.
+# GCE Hacktoberfest 1.0 DevZen.
 
 ****
 
