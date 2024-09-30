@@ -42,6 +42,20 @@ in wierd cases.
 
 ****
 
+## Project Structure
+
+```markdown
+src\
+ |--feature\         # Folder for working on particular feature eg (payments, auth, posts, comments,)
+    |-- services\    # Business logic (service layer)
+    |-- routes\      # Routes
+    |-- listener\    # Event listeners for this feature.
+ |-- Common\         # modules used by all services 
+ |-- Core\           # libraries of modules.
+ |-- App\            # Application layer logic
+ |--main.ts        # App entry point
+```
+
 ### GUIDELINES
 
 ****
