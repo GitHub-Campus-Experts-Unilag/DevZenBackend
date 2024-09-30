@@ -1,5 +1,5 @@
 import { ExtractParams } from "../../core";
-import { register } from "./event.listener.register";
+import { register } from "./events-registry";
 
 /**
  * Events Helper types

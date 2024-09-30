@@ -1,5 +1,5 @@
 export * from "./app.cache.manager";
 export * from "./app.events";
-export * from "./event.listener.register";
+export * from "./events-registry";
 export * from "./helper.types";
 export * from "./encryptor";

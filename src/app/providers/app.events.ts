@@ -1,7 +1,7 @@
 import { EventEmitter2 as Event } from "eventemitter2";
 
 import { EventListenerMap, Listener } from "../../core";
-import { register } from "./event.listener.register";
+import { register } from "./events-registry";
 import { eventKeys, AppEventListenerMap } from "./helper.types";
 
 class AppEventManager extends Event {
