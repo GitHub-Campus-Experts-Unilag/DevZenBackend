@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  scribe_api:
+    container_name: "gce_[app_name]"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: "gce_[hostname]"
+    ports:
+      - "4000:4000"
+    env_file:
+      - /docker.env
+    depends_on:
+      - scribe_db
+    healthcheck:
+      test: "echo 'db.runCommand('ping').ok' | mongosh localhost:27018/test --quiet"
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  scribe_db:
+    container_name: gce_[database_name]
+    image: mongo:latest
+    env_file:
+      - /docker.env      
+    ports:
+      - "27018:27017"
+    volumes:
+    - mongodb_data:/data/db
+    
+  scribe_db_visualizer:
+    image: mongo-express
+    ports:
+      - "27019:8081"
+    depends_on:
+      - scribe_db
+    env_file:
+     - /docker.env
+
+volumes:
+  nginx_data:
+  mongodb_data:
