@@ -6,6 +6,7 @@ dotenv.config();
 export const config = Object.freeze({
   app: {
     port: parseInt(process.env.PORT!),
+    host: process.env.ServerHost as string,
     environment: {
       mode: process.env.NODE_ENV,
       isInProduction: process.env.NODE_ENV === ENVIRONMENT.PROD,
@@ -28,6 +29,16 @@ export const config = Object.freeze({
     smtpRefreshToken: process.env.REFRESH_TOKEN as string,
   },
   auth: {
+    passport: {
+      google: {
+        clientID: process.env.GOOGLE_CLIENT_ID as string,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      },
+      github: {
+        clientID: process.env.GITHUB_CLIENT_ID as string,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      },
+    },
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET as string,
     accessTokenExpiresIn: process.env.ACCESS_TOKEN_SECRET_LIFESPAN as string,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET as string,
