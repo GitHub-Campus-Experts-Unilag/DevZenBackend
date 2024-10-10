@@ -12,7 +12,7 @@ import { TokenService } from "../helpers";
 export class SignIn {
   constructor(
     private readonly usersRepo: UserRepository,
-    private readonly tokenService: TokenService,
+    private readonly tokenService: TokenService
   ) {}
 
   /**
@@ -28,7 +28,7 @@ export class SignIn {
 
     const isEqual = await PasswordHelper.compareHashedData(
       input.password,
-      user.password,
+      user.password
     );
     if (!isEqual)
       throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
@@ -40,7 +40,7 @@ export class SignIn {
 
     await this.usersRepo.updateOne(
       { user_id: user.user_id },
-      { $set: { refreshToken } },
+      { $set: { refreshToken } }
     );
 
     return {
@@ -56,5 +56,3 @@ export class SignIn {
     };
   };
 }
-
-

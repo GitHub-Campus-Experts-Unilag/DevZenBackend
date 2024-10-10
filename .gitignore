@@ -13,6 +13,9 @@ lerna-debug.log*
 # node_modules
 node_modules/*
 
+
+.dockerignore
+
 # Build
 build/*
 
