@@ -15,12 +15,15 @@ export const userSchema = new Schema<IUsers>(
       default: () => crypto.randomUUID(),
       index: true,
     },
-    firstname: {
+    googleId: {
       type: String,
       required: true,
-      trim: true,
     },
-    lastname: {
+    githubId: {
+      type: String,
+      required: true,
+    },
+    displayName: {
       type: String,
       required: true,
       trim: true,
@@ -30,13 +33,6 @@ export const userSchema = new Schema<IUsers>(
       unique: true,
       trim: true,
       index: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    refreshToken: {
-      type: String,
     },
     isDeleted: {
       type: Boolean,
