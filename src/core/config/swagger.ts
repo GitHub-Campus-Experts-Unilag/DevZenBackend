@@ -1,7 +1,7 @@
 // src/swaggerConfig.ts
 import { Options } from "swagger-jsdoc";
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
+import * as swaggerJsdoc from "swagger-jsdoc";
+import * as swaggerUi from "swagger-ui-express";
 import config from "./config";
 
 const swaggerOptions: Options = {

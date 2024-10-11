@@ -23,16 +23,10 @@ export class SignIn {
    */
   handle = async ({ input }: Context<SignInPayload>) => {
     const user = await this.usersRepo.findOne({ email: input.email });
+    if (!user)
+      throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
-    // explicit check for password to avoid timing attacks
-    if (!user || typeof user.password !== 'string') {
-        throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
-    }
-    
-    const isEqual = await PasswordHelper.compareHashedData(
-      input.password,
-      user.password,
-    );
+    const isEqual = await PasswordHelper.compareHashedData(input.password, "");
     if (!isEqual)
       throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
