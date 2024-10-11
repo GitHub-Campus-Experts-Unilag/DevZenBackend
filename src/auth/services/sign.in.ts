@@ -1,13 +1,13 @@
-import {
-  Context,
-  HttpStatus,
-  PasswordHelper,
-  UnAuthorizedError,
-} from "../../core";
-import { SignInPayload } from "../types";
-import { UserRepository } from "../../users";
 import { AppMessages } from "../../common";
+import {
+    Context,
+    HttpStatus,
+    PasswordHelper,
+    UnAuthorizedError,
+} from "../../core";
+import { UserRepository } from "../../users";
 import { TokenService } from "../helpers";
+import { SignInPayload } from "../types";
 
 export class SignIn {
   constructor(
@@ -23,9 +23,12 @@ export class SignIn {
    */
   handle = async ({ input }: Context<SignInPayload>) => {
     const user = await this.usersRepo.findOne({ email: input.email });
-    if (!user)
-      throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
+    // explicit check for password to avoid timing attacks
+    if (!user || typeof user.password !== 'string') {
+        throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
+    }
+    
     const isEqual = await PasswordHelper.compareHashedData(
       input.password,
       user.password,
@@ -56,5 +59,3 @@ export class SignIn {
     };
   };
 }
-
-
