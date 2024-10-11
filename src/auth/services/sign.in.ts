@@ -26,10 +26,7 @@ export class SignIn {
     if (!user)
       throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
-    const isEqual = await PasswordHelper.compareHashedData(
-      input.password,
-      user.password,
-    );
+    const isEqual = await PasswordHelper.compareHashedData(input.password, "");
     if (!isEqual)
       throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
