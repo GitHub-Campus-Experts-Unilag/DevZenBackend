@@ -2,7 +2,6 @@ import * as crypto from "node:crypto";
 
 import { Schema } from "mongoose";
 import { IUsers } from "./user.interface";
-import { truncate } from "lodash";
 
 
 
@@ -17,11 +16,11 @@ export const userSchema = new Schema<IUsers>(
     },
     googleId: {
       type: String,
-      required: true,
+      required: false,
     },
     githubId: {
       type: String,
-      required: true,
+      required: false,
     },
     displayName: {
       type: String,
@@ -53,4 +52,3 @@ export const userSchema = new Schema<IUsers>(
     },
   },
 );
-

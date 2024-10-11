@@ -1,8 +1,7 @@
-import { Request, Router, Response } from "express";
+import { Request, Response, Router } from "express";
 
-import { HttpStatus } from "../core";
 import { authRouter } from "../auth";
-import { serveDocumentation, setupDocumentation } from "../core";
+import { HttpStatus, serveDocumentation, setupDocumentation } from "../core";
 
 export const appRouter = Router();
 
@@ -18,6 +17,3 @@ appRouter.use("/api-docs", serveDocumentation, setupDocumentation);
 
 appRouter
   .use("/auth", authRouter);
-
-
-
