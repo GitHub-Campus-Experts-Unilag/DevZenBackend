@@ -17,7 +17,7 @@ export const userSchema = new Schema<IUsers>(
     },
     googleId: {
       type: String,
-      required: true,
+      required: false,
     },
     githubId: {
       type: String,
