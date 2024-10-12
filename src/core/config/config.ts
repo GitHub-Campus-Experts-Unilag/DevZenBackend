@@ -37,6 +37,7 @@ export const config = Object.freeze({
       github: {
         clientID: process.env.GITHUB_CLIENT_ID as string,
         clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+        callBackUrl: process.env.GITHUB_CALLBACK_URL as string,
       },
     },
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET as string,
