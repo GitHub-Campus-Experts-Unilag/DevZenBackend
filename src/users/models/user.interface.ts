@@ -7,6 +7,6 @@ export interface IUsers extends IModel {
   displayName: string;
   profileImage?: string;
   email: string;
-  password: string;
+  password?: string;
   isDeleted: Boolean;
 }

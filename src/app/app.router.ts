@@ -1,3 +1,7 @@
+import { Request, Response, Router } from "express";
+
+import { authRouter } from "../auth";
+import { HttpStatus, serveDocumentation, setupDocumentation } from "../core";
 import express, { Request, Response, Router } from "express";
 import * as passport from "passport";
 import * as session from "express-session";
@@ -28,6 +32,8 @@ appRouter.get("/health", (_: Request, res: Response) => {
 
 appRouter.use("/api-docs", serveDocumentation, setupDocumentation);
 
+appRouter
+  .use("/auth", authRouter);
 appRouter.use("/auth", authRouter);
 
 export { appRouter };
