@@ -1,10 +1,23 @@
-import { Request, Router, Response } from "express";
-
-import { HttpStatus } from "../core";
-import { authRouter } from "../auth";
+import express, { Request, Response, Router } from "express";
+import * as passport from "passport";
+import * as session from "express-session";
+import { config, HttpStatus } from "../core";
+import { authRouter } from "../auth/routes";
 import { serveDocumentation, setupDocumentation } from "../core";
+import "../auth/strategies/passport-github";
 
-export const appRouter = Router();
+const appRouter = Router();
+
+appRouter.use(
+  session({
+    secret: config.auth.accessTokenSecret,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+appRouter.use(passport.initialize());
+appRouter.use(passport.session());
 
 appRouter.get("/health", (_: Request, res: Response) => {
   res.status(HttpStatus.OK).json({
@@ -13,11 +26,8 @@ appRouter.get("/health", (_: Request, res: Response) => {
   });
 });
 
-// api documentation (swagger)
 appRouter.use("/api-docs", serveDocumentation, setupDocumentation);
 
-appRouter
-  .use("/auth", authRouter);
+appRouter.use("/auth", authRouter);
 
-
-
+export { appRouter };

@@ -12,7 +12,7 @@ import { TokenService } from "../helpers";
 export class SignIn {
   constructor(
     private readonly usersRepo: UserRepository,
-    private readonly tokenService: TokenService,
+    private readonly tokenService: TokenService
   ) {}
 
   /**
@@ -37,7 +37,7 @@ export class SignIn {
 
     await this.usersRepo.updateOne(
       { user_id: user.user_id },
-      { $set: { refreshToken } },
+      { $set: { refreshToken } }
     );
 
     return {
@@ -53,5 +53,3 @@ export class SignIn {
     };
   };
 }
-
-

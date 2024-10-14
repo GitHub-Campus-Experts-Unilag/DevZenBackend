@@ -4,8 +4,6 @@ import { Schema } from "mongoose";
 import { IUsers } from "./user.interface";
 import { truncate } from "lodash";
 
-
-
 export const userSchema = new Schema<IUsers>(
   {
     user_id: {
@@ -17,7 +15,7 @@ export const userSchema = new Schema<IUsers>(
     },
     googleId: {
       type: String,
-      required: true,
+      required: false,
     },
     githubId: {
       type: String,
@@ -51,6 +49,5 @@ export const userSchema = new Schema<IUsers>(
         delete ret.refreshToken;
       },
     },
-  },
+  }
 );
-
