@@ -3,8 +3,6 @@ import * as crypto from "node:crypto";
 import { Schema } from "mongoose";
 import { IUsers } from "./user.interface";
 
-
-
 export const userSchema = new Schema<IUsers>(
   {
     user_id: {
@@ -50,5 +48,5 @@ export const userSchema = new Schema<IUsers>(
         delete ret.refreshToken;
       },
     },
-  },
+  }
 );
