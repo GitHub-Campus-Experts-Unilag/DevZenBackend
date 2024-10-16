@@ -5,12 +5,8 @@ import * as express from "express";
 import helmet from "helmet";
 import * as morgan from "morgan";
 import { configurePassport } from "../auth/config/passport-config";
-import {
-    config,
-    errorHandler,
-    notFoundHandler,
-} from "../core";
-import { appRouter } from "./app.router";
+import { config, errorHandler, notFoundHandler } from "../core";
+import { appRouter } from "./router";
 
 export const app = express();
 
