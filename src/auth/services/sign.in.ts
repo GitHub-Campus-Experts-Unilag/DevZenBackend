@@ -1,9 +1,9 @@
 import { AppMessages } from "../../common";
 import {
-    Context,
-    HttpStatus,
-    PasswordHelper,
-    UnAuthorizedError,
+  Context,
+  HttpStatus,
+  PasswordHelper,
+  UnAuthorizedError,
 } from "../../core";
 import { UserRepository } from "../../users";
 import { TokenService } from "../helpers";
@@ -31,12 +31,12 @@ export class SignIn {
       throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
     const [accessToken, refreshToken] = await this.tokenService.getTokens({
-      id: user.user_id,
-      email: user.email,
+      id: user.user_id!,
+      email: user.email!,
     });
 
     await this.usersRepo.updateOne(
-      { user_id: user.user_id },
+      { user_id: user.user_id! },
       { $set: { refreshToken } }
     );
 

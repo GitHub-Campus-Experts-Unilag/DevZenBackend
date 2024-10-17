@@ -12,5 +12,7 @@ export const tokenService = new TokenService(encryptor);
 export const currentUser = new CurrentUser(tokenService, encryptor);
 
 export const signIn = new SignIn(Users, tokenService);
-export const signUp = new SignUp(Users)
+export const signUp = new SignUp(Users);
 export const signOut = new Logout(tokenService, Users, BlackListTokens);
+
+export { authPassport } from "./services";
