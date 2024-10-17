@@ -7,7 +7,7 @@ export const userSchema = new Schema<IUsers>(
   {
     user_id: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
       default: () => crypto.randomUUID(),
       index: true,
@@ -27,9 +27,14 @@ export const userSchema = new Schema<IUsers>(
     },
     email: {
       type: String,
+      required: false,
       unique: true,
       trim: true,
       index: true,
+    },
+    password: {
+      type: String,
+      required: false,
     },
     isDeleted: {
       type: Boolean,

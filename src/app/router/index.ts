@@ -1,6 +1,12 @@
 import { Request, Response, Router } from "express";
-import { HttpStatus, serveDocumentation, setupDocumentation } from "../../core";
-import { authRouter } from "../../auth";
+import * as session from "express-session";
+import {
+  config,
+  HttpStatus,
+  serveDocumentation,
+  setupDocumentation,
+} from "../../core";
+import { authRouter, authPassport } from "../../auth";
 import { protectedRouter } from "./protected";
 
 const appRouter = Router();
@@ -12,6 +18,17 @@ appRouter.get("/health", (_: Request, res: Response) => {
   });
 });
 appRouter.use("/api-docs", serveDocumentation, setupDocumentation);
+
+appRouter.use(
+  session({
+    secret: config.auth.passport.sessionSecret!,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+appRouter.use(authPassport.initialize());
+appRouter.use(authPassport.session());
+
 appRouter.use("/auth", authRouter);
 appRouter.use("/protected", protectedRouter);
 
