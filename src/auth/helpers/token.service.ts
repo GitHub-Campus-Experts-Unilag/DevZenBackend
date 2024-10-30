@@ -47,7 +47,7 @@ export class TokenService {
    * @returns {string} decoded token
    * @throws {UnAuthorizedError} error
    */
-  verifyToken(token: string, secret: string): jwt.JwtPayload {
+    verifyToken(token: string, secret: string): jwt.JwtPayload {
     try {
       return jwt.decode(token) as jwt.JwtPayload;
     } catch (err) {
