@@ -4,7 +4,7 @@ import { authPassport, githubController } from "../services";
 import { Router } from "express";
 
 export const oauthRouter = Router();
-// oauthRouter.use(authRateLimiter);
+oauthRouter.use(authRateLimiter);
 
 // google
 oauthRouter
