@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Types } from "mongoose";
+import { Zenboard } from "../models";
 import {
   addPermission,
   updatePermission,
@@ -12,6 +13,25 @@ import {
 } from "../services/invites";
 
 export const zenboardRouter = Router();
+
+zenboardRouter.post("/", async (req, res) => {
+  const { title } = req.body;
+  //   const ownerId = req.user?.id;
+
+  if (!title) {
+    return res.status(400).json({ message: "Title and ownerId are required" });
+  }
+
+  try {
+    const zenboard = await Zenboard.create({
+      title,
+      //   ownerId,
+    });
+    res.status(201).json(zenboard);
+  } catch (error) {
+    res.status(500).json({ message: "Error creating Zenboard", error });
+  }
+});
 
 zenboardRouter.post("/:zenboardId/invite", async (req, res) => {
   const { zenboardId } = req.params;

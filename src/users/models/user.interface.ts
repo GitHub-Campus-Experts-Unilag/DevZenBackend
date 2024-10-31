@@ -1,7 +1,8 @@
 import { IModel } from "../../common";
 
 export interface IUsers extends IModel {
-  user_id?: string;
+  _id?: string;
+  // user_id?: string;
   googleId?: string;
   githubId?: string;
   displayName: string;

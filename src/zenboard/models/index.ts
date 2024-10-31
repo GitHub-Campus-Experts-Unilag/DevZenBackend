@@ -2,11 +2,11 @@ import { model, Schema } from "mongoose";
 
 const zenboardSchema = new Schema(
   {
-    ownerId: {
-      type: Schema.Types.ObjectId,
-      ref: "Users",
-      required: true,
-    },
+    // ownerId: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Users",
+    //   required: true,
+    // },
     title: {
       type: String,
       required: true,

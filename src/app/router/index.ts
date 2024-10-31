@@ -6,7 +6,7 @@ import {
   serveDocumentation,
   setupDocumentation,
 } from "../../core";
-import { authRouter, authPassport } from "../../auth";
+import { oauthRouter, authPassport } from "../../auth";
 import { protectedRouter } from "./protected";
 
 const appRouter = Router();
@@ -29,7 +29,7 @@ appRouter.use(
 appRouter.use(authPassport.initialize());
 appRouter.use(authPassport.session());
 
-appRouter.use("/auth", authRouter);
+appRouter.use("/auth", oauthRouter);
 appRouter.use("/protected", protectedRouter);
 
 export { appRouter };

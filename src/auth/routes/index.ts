@@ -1,19 +1,38 @@
 import * as express from "express";
-import { Router } from "express";
-// import { currentUser, signIn, signOut, signUp } from "../auth.module";
 import { authRateLimiter } from "../../core";
-import { oauthRouter } from "./signin.route";
-// import { controlHandler } from "../../core";
-// import { signInSchema, signUpSchema } from "./schema";
+import { authPassport, githubController } from "../services";
+import { Router } from "express";
 
-export const authRouter = Router();
-authRouter.use(express.json());
-authRouter.use(authRateLimiter);
+export const oauthRouter = Router();
+// oauthRouter.use(authRateLimiter);
 
-// currently unused routes
-// authRouter
-//   .post("/sign-up", controlHandler.handle(signUp.handle, signUpSchema))
-//   .post("/sign-in", controlHandler.handle(signIn.handle, signInSchema))
-//   .post("/sign-out", currentUser.handle, controlHandler.handle(signOut.handle));
+// google
+oauthRouter
+  .get(
+    "/google",
+    authPassport.authenticate("google", { scope: ["profile", "email"] })
+  )
+  .get(
+    "/google/callback",
+    authPassport.authenticate("google", { failureRedirect: "/sign-in" }),
+    (req, res) => {
+      res.redirect("/v1/auth/dashboard"); //temporary redirect path for now
+    }
+  )
+  //temporary route for successful google authentication
+  .get("/dashboard", (req, res) => {
+    res.send("You have successfully logged in with Google");
+  });
 
-authRouter.use("/oauth", oauthRouter);
+// github
+oauthRouter
+  .get(
+    "/github",
+    authPassport.authenticate("github", { scope: ["user:email"] })
+  )
+  .get(
+    "/github/callback",
+    authPassport.authenticate("github", { failureRedirect: "/auth/sign-in" }),
+    githubController.callbackHandler
+  );
+oauthRouter.get("/logout", githubController.logout);

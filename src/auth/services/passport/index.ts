@@ -6,8 +6,9 @@ import { Users, IUsers } from "../../../users";
 export { githubController } from "./github";
 
 export const authPassport = passport;
+
 authPassport.serializeUser((user: IUsers, done) => {
-  done(null, user.user_id);
+  done(null, user._id);
 });
 
 authPassport.deserializeUser(async (id, done) => {
