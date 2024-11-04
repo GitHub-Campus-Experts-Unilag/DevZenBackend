@@ -94,7 +94,7 @@
 
 import * as crypto from "node:crypto";
 import * as jwt from "jsonwebtoken";
-import { OAuth2Client } from "google-auth-library"; // Google OAuth2 client for verifying Google tokens
+import { OAuth2Client } from "google-auth-library";
 import { Encryptor } from "../../app";
 import { UnAuthorizedError, config, logger } from "../../core";
 import { IJwtData } from "../types";
@@ -140,7 +140,7 @@ export class TokenService {
           email: githubPayload.email,
         },
         token,
-        expiration: new Date(), // GitHub tokens don’t have an expiration field, so this may need further customization
+        expiration: new Date(),
       };
     }
 
@@ -226,7 +226,7 @@ export class TokenService {
 
   // Helper methods to check if token is from Google or GitHub
   private isGoogleToken(token: string): boolean {
-    return token.length > 1000; // Google tokens are typically large (JWTs)
+    return token.length > 1000; 
   }
 
   private isGitHubToken(token: string): boolean {

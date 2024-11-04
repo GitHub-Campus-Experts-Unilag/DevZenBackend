@@ -21,21 +21,18 @@ export const githubStrategy = new GitHubStrategy(
     try {
       const email = profile.emails?.[0]?.value || undefined;
 
-      // Try finding the user by githubId first
       let user = await Users.findOne({ githubId: profile.id });
 
       if (!user) {
-        // If no user found by githubId, check if there's a user with this email
         if (email) {
           user = await Users.findOne({ email });
         }
-        // If still no user, create a new one
         if (!user) {
           user = await Users.create({
             githubId: profile.id,
             displayName:
               profile.displayName || profile.username || "Abercrombie",
-            email, // only set email if it's defined
+            // email, 
           });
         }
       }
