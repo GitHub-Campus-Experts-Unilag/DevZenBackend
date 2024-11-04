@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { AccessLevels } from "./accessLevels.enum";
 
 const permissionsSchema = new Schema({
   userId: {
@@ -13,7 +14,7 @@ const permissionsSchema = new Schema({
   },
   accessLevel: {
     type: String,
-    enum: ["owner", "editor", "viewer"],
+    enum: Object.values(AccessLevels),
     default: "viewer",
   },
 });

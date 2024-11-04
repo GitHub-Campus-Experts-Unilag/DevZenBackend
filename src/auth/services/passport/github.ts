@@ -3,6 +3,7 @@ import { Profile } from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { config, UnProcessableError } from "../../../core";
 import { Users } from "../../../users";
+import { IAuthData } from "../../types";
 
 export const githubStrategy = new GitHubStrategy(
   {
@@ -38,7 +39,13 @@ export const githubStrategy = new GitHubStrategy(
           });
         }
       }
-      return done(null, user);
+
+      const authData: IAuthData = {
+        id: user.id,
+        email: user.email!,
+        accessToken,
+      };
+      return done(null, authData);
     } catch (error) {
       const newError = new UnProcessableError(
         `GitHub Authentication Error: ${error}`
@@ -55,7 +62,17 @@ class GitHubController {
   };
 
   callbackHandler = (req: Request, res: Response): void => {
-    res.send(`You have successfully logged in with GitHub!`);
+    const user = req.user as IAuthData; // Typecast to IAuthData
+
+    if (user && user.accessToken) {
+      res.status(200).json({
+        message: "Successfully logged in with GitHub",
+        accessToken: user.accessToken,
+        id: user.id,
+      });
+    } else {
+      res.status(500).json({ message: "Failed to retrieve access token" });
+    }
   };
 
   logout = (req: Request, res: Response): void => {

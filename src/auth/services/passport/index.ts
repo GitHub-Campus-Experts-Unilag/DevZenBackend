@@ -2,13 +2,14 @@ import * as passport from "passport";
 import { githubStrategy } from "./github";
 import { googleStrategy } from "./google";
 import { Users, IUsers } from "../../../users";
+import { IAuthData } from "../../types";
 
 export { githubController } from "./github";
 
 export const authPassport = passport;
 
-authPassport.serializeUser((user: IUsers, done) => {
-  done(null, user._id);
+authPassport.serializeUser((user: IUsers | IAuthData, done) => {
+  done(null, (user as IUsers)._id || (user as IAuthData).id);
 });
 
 authPassport.deserializeUser(async (id, done) => {

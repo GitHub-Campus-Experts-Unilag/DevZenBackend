@@ -31,7 +31,7 @@ export const googleStrategy = new GoogleStrategy(
         }
       }
 
-      return done(null, user || undefined);
+      return done(null, { user, accessToken });
     } catch (error) {
       const newError = new UnProcessableError(
         `Google Authentication Error: ${error}`

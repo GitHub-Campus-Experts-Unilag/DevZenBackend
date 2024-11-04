@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { Types } from "mongoose";
 import { Zenboard } from "../models";
+import { CurrentUser } from "../../auth/middlewares/current.user";
+import { Encryptor } from "../../app/providers/encryptor";
+import { TokenService } from "../../auth/helpers";
 import {
   addPermission,
   updatePermission,
@@ -14,18 +17,25 @@ import {
 
 export const zenboardRouter = Router();
 
+const encryptor = new Encryptor();
+const tokenService = new TokenService(encryptor);
+const currentUserMiddleware = new CurrentUser(tokenService, encryptor);
+
+zenboardRouter.use(currentUserMiddleware.handle);
+
+// Route to create a new Zenboard
 zenboardRouter.post("/", async (req, res) => {
   const { title } = req.body;
-  //   const ownerId = req.user?.id;
+  const ownerId = req.user?.id;
 
   if (!title) {
-    return res.status(400).json({ message: "Title and ownerId are required" });
+    return res.status(400).json({ message: "Title is required" });
   }
 
   try {
     const zenboard = await Zenboard.create({
       title,
-      //   ownerId,
+      ownerId: new Types.ObjectId(ownerId),
     });
     res.status(201).json(zenboard);
   } catch (error) {
@@ -33,10 +43,15 @@ zenboardRouter.post("/", async (req, res) => {
   }
 });
 
+// Route to invite a user to a Zenboard
 zenboardRouter.post("/:zenboardId/invite", async (req, res) => {
   const { zenboardId } = req.params;
   const { email } = req.body;
   const invitedBy = req.user?.id;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
 
   try {
     const invite = await sendInvite(
@@ -50,6 +65,7 @@ zenboardRouter.post("/:zenboardId/invite", async (req, res) => {
   }
 });
 
+// Route to update the invite status
 zenboardRouter.put("/invite/:inviteId", async (req, res) => {
   const { inviteId } = req.params;
   const { status } = req.body;
@@ -65,6 +81,7 @@ zenboardRouter.put("/invite/:inviteId", async (req, res) => {
   }
 });
 
+// Route to add permissions to a Zenboard
 zenboardRouter.post("/:zenboardId/permissions", async (req, res) => {
   const { zenboardId } = req.params;
   const { userId, accessLevel } = req.body;
@@ -81,6 +98,7 @@ zenboardRouter.post("/:zenboardId/permissions", async (req, res) => {
   }
 });
 
+// Route to revoke permissions
 zenboardRouter.delete("/permissions/:permissionId", async (req, res) => {
   const { permissionId } = req.params;
 
