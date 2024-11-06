@@ -81,6 +81,42 @@ zenboardRouter.put("/invite/:inviteId", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /protected/zenboard/{zenboardId}/permissions:
+ *   post:
+ *     summary: Add permissions to a Zenboard
+ *     tags: [Zenboard]
+ *     parameters:
+ *       - in: path
+ *         name: zenboardId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the Zenboard
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - accessLevel
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 description: The ID of the user to grant permission to
+ *               accessLevel:
+ *                 type: string
+ *                 description: The level of access to grant
+ *     responses:
+ *       201:
+ *         description: Permission granted successfully
+ *       500:
+ *         description: Error granting permission
+ */
+
 // Route to add permissions to a Zenboard
 zenboardRouter.post("/:zenboardId/permissions", async (req, res) => {
   const { zenboardId } = req.params;

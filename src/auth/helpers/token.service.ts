@@ -225,8 +225,28 @@ export class TokenService {
   }
 
   // Helper methods to check if token is from Google or GitHub
+
   private isGoogleToken(token: string): boolean {
-    return token.length > 1000; 
+    try {
+      const decodedToken = jwt.decode(token, { complete: true });
+
+      if (
+        decodedToken &&
+        typeof decodedToken === "object" &&
+        decodedToken.payload &&
+        typeof decodedToken.payload === "object"
+      ) {
+        const payload = decodedToken.payload as jwt.JwtPayload;
+        const issuer = payload.iss;
+        return (
+          issuer === "https://accounts.google.com" ||
+          issuer === "accounts.google.com"
+        );
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
 
   private isGitHubToken(token: string): boolean {
