@@ -5,13 +5,6 @@ import { IUsers } from "./user.interface";
 
 export const userSchema = new Schema<IUsers>(
   {
-    user_id: {
-      type: String,
-      required: false,
-      unique: true,
-      default: () => crypto.randomUUID(),
-      index: true,
-    },
     googleId: {
       type: String,
       required: false,
@@ -46,7 +39,7 @@ export const userSchema = new Schema<IUsers>(
     virtuals: true,
     toJSON: {
       transform(doc, ret, options) {
-        ret.user_id = ret._id;
+        ret.id = ret._id;
         delete ret.__v;
         delete ret._id;
         delete ret.password;
