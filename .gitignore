@@ -174,7 +174,6 @@ build
 
 # Stores VSCode versions used for testing VSCode extensions
 
-.vscode-test
 
 # yarn v2
 
@@ -192,3 +191,6 @@ build
 
 nginx/config/ssl-dhparam.pem
 nginx/config/options-ssl-nginx.conf
+temp_auto_push.bat
+temp_interactive_push.bat
+branch_structure.json
