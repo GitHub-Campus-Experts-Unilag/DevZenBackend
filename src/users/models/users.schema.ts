@@ -1,7 +1,7 @@
 import * as crypto from "node:crypto";
 
 import { Schema } from "mongoose";
-import { IUsers } from "./user.interface";
+import { IUsers, IFeedback } from "./user.interface";
 
 export const userSchema = new Schema<IUsers>(
   {
@@ -51,6 +51,32 @@ export const userSchema = new Schema<IUsers>(
         delete ret._id;
         delete ret.password;
         delete ret.refreshToken;
+      },
+    },
+  }
+);
+
+export const feedbackSchema = new Schema<IFeedback>(
+  {
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    message: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  {
+    timestamps: true,
+    virtuals: true,
+    toJSON: {
+      transform(doc, ret, options) {
+        ret.feedback_id = ret._id;
+        delete ret.__v;
+        delete ret._id;
       },
     },
   }

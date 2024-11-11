@@ -8,6 +8,7 @@ import {
 } from "../../core";
 import { authRouter, authPassport } from "../../auth";
 import { protectedRouter } from "./protected";
+import { feedbackRouter } from "../../users/routes/feedback.router";
 
 const appRouter = Router();
 
@@ -31,5 +32,6 @@ appRouter.use(authPassport.session());
 
 appRouter.use("/auth", authRouter);
 appRouter.use("/protected", protectedRouter);
+appRouter.use("/feedback", feedbackRouter);
 
 export { appRouter };
