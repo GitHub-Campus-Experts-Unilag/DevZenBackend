@@ -31,12 +31,12 @@ export class SignIn {
       throw new UnAuthorizedError(AppMessages.FAILURE.INVALID_CREDENTIALS);
 
     const [accessToken, refreshToken] = await this.tokenService.getTokens({
-      id: user.user_id!,
+      id: user._id!,
       email: user.email!,
     });
 
     await this.usersRepo.updateOne(
-      { user_id: user.user_id! },
+      { user_id: user._id! },
       { $set: { refreshToken } }
     );
 
